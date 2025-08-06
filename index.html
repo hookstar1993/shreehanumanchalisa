@@ -1,375 +1,686 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html lang="en" class="light">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="style.css">
-  <title>Shree Hanuman Chalisa | श्री हनुमान चालीसा </title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hanuman Chalisa | हनुमान चालीसा | હનુમાન ચાલીસા</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Serif+Devanagari:wght@400;600;700&family=Noto+Serif+Gujarati:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Base styles */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-attachment: fixed;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            cursor: default;
+        }
+        .devanagari {
+            font-family: 'Noto Serif Devanagari', serif;
+        }
+        .gujarati {
+            font-family: 'Noto Serif Gujarati', serif;
+        }
+
+        /* Glassmorphism Card Style */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-radius: 24px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.1);
+        }
+
+        /* --- Light Theme --- */
+        .light {
+            --bg-gradient-start: #ffecd2;
+            --bg-gradient-end: #fcb69f;
+            --text-primary: #3a2e20;
+            --text-secondary: #7b5b3b;
+            --glass-bg: rgba(255, 255, 255, 0.25);
+            --glass-border: rgba(255, 255, 255, 0.4);
+            --accent-color: #ff8c42;
+            --active-tab-bg: #ff8c42;
+            --active-tab-text: #ffffff;
+            --inactive-tab-bg: rgba(255, 255, 255, 0.2);
+            --inactive-tab-text: #5a452d;
+            --modal-overlay: rgba(58, 46, 32, 0.5);
+        }
+        .light body {
+            background-image: linear-gradient(120deg, var(--bg-gradient-start), var(--bg-gradient-end));
+        }
+        .light .glass-card {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+        }
+
+        /* --- Dark Theme --- */
+        .dark {
+            --bg-gradient-start: #121212;
+            --bg-gradient-end: #181818;
+            --text-primary: #f0e6d8;
+            --text-secondary: #c5b8a5;
+            --glass-bg: rgba(30, 30, 30, 0.35);
+            --glass-border: rgba(255, 255, 255, 0.15);
+            --accent-color: #ffb86c;
+            --active-tab-bg: #ffb86c;
+            --active-tab-text: #2a2a2a;
+            --inactive-tab-bg: rgba(0, 0, 0, 0.2);
+            --inactive-tab-text: #d4c7b5;
+            --modal-overlay: rgba(0, 0, 0, 0.6);
+        }
+        .dark body {
+            background-image: linear-gradient(120deg, var(--bg-gradient-start), var(--bg-gradient-end));
+        }
+        .dark .glass-card {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+        }
+
+        /* Themed elements */
+        .theme-text-primary { color: var(--text-primary); }
+        .theme-text-secondary { color: var(--text-secondary); }
+        .theme-accent-color { color: var(--accent-color); }
+        .theme-active-tab { background-color: var(--active-tab-bg); color: var(--active-tab-text); }
+        .theme-inactive-tab { background-color: var(--inactive-tab-bg); color: var(--inactive-tab-text); }
+        
+        /* Custom scrollbar for the page */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: var(--accent-color); border-radius: 10px; }
+
+        /* Typography Tuning */
+        #chalisa-content article p {
+            line-height: 1.8;
+        }
+
+        /* Modal Styles */
+        .modal-container {
+            background-color: var(--modal-overlay);
+        }
+        .modal-content {
+            transform: scale(0.95);
+            opacity: 0;
+            transition: transform 0.2s ease-out, opacity 0.2s ease-out;
+        }
+        .modal-container:not(.hidden) .modal-content {
+            transform: scale(1);
+            opacity: 1;
+        }
+
+        /* --- Cursor and Click Styles --- */
+        a, button, [onclick], .cursor-pointer {
+            cursor: pointer;
+            transition: transform 0.15s ease-out;
+        }
+        /* Active (click) effect */
+        a:active, button:active {
+            transform: scale(0.95);
+        }
+        /* Hover effect for key elements */
+        header a:hover, footer a:hover, #copy-btn:hover, #theme-toggle:hover, .close-modal-btn:hover {
+             transform: translateY(-2px);
+        }
+        .tab-btn:hover {
+            transform: scale(1.03);
+        }
+    </style>
 </head>
+<body class="theme-text-primary transition-colors duration-500">
 
-<body>
-  <!-- Header -->
-  <section id="header">
-    <div class="header container">
-      <div class="nav-bar">
-        <div class="brand">
-          <a href="#hero">
-            <h1><span>श्री </span>हनुमान <span> </span><span> </span>चालीसा</h1>
-          </a>
+    <!-- Header -->
+    <header class="glass-card fixed top-4 left-4 right-4 z-50">
+        <div class="container mx-auto px-4 py-3">
+            <nav class="flex justify-between items-center">
+                <a href="#" class="text-xl font-bold theme-text-primary">Shree Hanuman Chalisa</a>
+                <div class="hidden md:flex items-center space-x-6">
+                    <a href="#" class="font-medium theme-text-secondary hover:theme-text-primary transition-colors">Home</a>
+                    <a href="#" id="about-link" class="font-medium theme-text-secondary hover:theme-text-primary transition-colors cursor-pointer">About</a>
+                    <a href="#" id="contact-link" class="font-medium theme-text-secondary hover:theme-text-primary transition-colors cursor-pointer">Contact</a>
+                    <a href="#" id="donations-link" class="font-medium theme-text-primary theme-active-tab px-3 py-1 rounded-lg">Donations</a>
+                </div>
+                <button id="theme-toggle" title="Toggle Theme" class="p-2 rounded-full hover:bg-black/10 dark:hover:bg-white/10 transition-colors">
+                    <svg id="sun-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="theme-text-secondary"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+                    <svg id="moon-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="hidden theme-text-secondary"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+                </button>
+            </nav>
         </div>
-        <div class="nav-list">
-          <div class="hamburger">
-            <div class="bar"></div>
-          </div>
-          <ul>
-            <li><a href="#hero" data-after="Home">Home</a></li>
-            <li><a href="#services" data-after="Service">Services</a></li>
-            <li><a href="#hanumanchalisa" data-after="Hanuman Chalisa">Hanuman Chalisa</a></li>
-            <li><a href="#about" data-after="About">About</a></li>
-            <li><a href="#contact" data-after="Contact">Contact</a></li>
-          </ul>
-        </div>
-      </div>
+    </header>
+
+    <div class="container mx-auto p-4 max-w-4xl pt-28 pb-16">
+        
+        <!-- Main Content Card -->
+        <main class="glass-card p-6 md:p-8">
+            
+            <div class="text-center mb-8">
+                <h1 class="devanagari text-4xl md:text-5xl font-bold theme-text-primary tracking-wide">हनुमान चालीसा</h1>
+                <p class="text-xl md:text-2xl theme-text-secondary mt-2 font-light tracking-wider">Hanuman Chalisa</p>
+            </div>
+            
+            <!-- Top controls -->
+            <div class="flex justify-center items-center mb-6">
+                <button id="copy-btn" title="Copy Text" class="p-3 rounded-full hover:bg-black/10 dark:hover:bg-white/10 transition-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="theme-text-secondary"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                </button>
+            </div>
+
+            <!-- Tab Navigation -->
+            <div class="mb-6">
+                <div class="flex bg-black/5 dark:bg-white/5 rounded-lg p-1 space-x-1">
+                    <button data-tab="gujarati" class="tab-btn w-1/4 p-2 rounded-md text-sm md:text-base font-semibold transition-all duration-300">ગુજરાતી</button>
+                    <button data-tab="sanskrit" class="tab-btn w-1/4 p-2 rounded-md text-sm md:text-base font-semibold transition-all duration-300">संस्कृत</button>
+                    <button data-tab="hindi" class="tab-btn w-1/4 p-2 rounded-md text-sm md:text-base font-semibold transition-all duration-300">हिन्दी</button>
+                    <button data-tab="english" class="tab-btn w-1/4 p-2 rounded-md text-sm md:text-base font-semibold transition-all duration-300">English</button>
+                </div>
+            </div>
+
+            <!-- Chalisa Text Content -->
+            <div id="chalisa-content" class="text-center text-xl theme-text-primary pr-2">
+                <!-- Content will be dynamically inserted here -->
+            </div>
+            
+            <!-- Copy Confirmation Message -->
+            <div id="copy-message" class="fixed bottom-5 right-5 glass-card px-4 py-2 text-sm transition-opacity duration-300 opacity-0 theme-text-primary">
+                Text copied to clipboard!
+            </div>
+
+        </main>
+        
     </div>
-  </section>
-  <!-- End Header -->
 
+    <!-- Footer -->
+    <footer class="text-center pb-8 px-4">
+        <p class="text-sm theme-text-secondary mb-2">&copy; 2025 Shree Hanuman Chalisa. All Rights Reserved.</p>
+        <p class="text-sm theme-text-secondary">Designed with ❤ in INDIA | <a href="https://hookstar1993.github.io/dailyanimation/" target="_blank" rel="noopener noreferrer" class="font-bold hover:underline">HOOK STAR</a>.</p>
+    </footer>
 
-  <!-- Hero Section  -->
-  <!--<section id="hero">
-    <div class="hero container">
-      <div>
-        <h1>Hello, <span></span></h1>
-        <h1>My Name is <span></span></h1>
-        <h1>Arfan <span></span></h1>
-        <a href="#projects" type="button" class="cta">Portfolio</a>
-      </div>
+    <!-- About Modal -->
+    <div id="about-modal" class="modal-container fixed inset-0 z-50 flex items-center justify-center p-4 hidden">
+        <div class="modal-content glass-card w-full max-w-md p-6 relative">
+            <button class="close-modal-btn absolute top-4 right-4 p-1 rounded-full hover:bg-black/10 dark:hover:bg-white/10">
+                <svg class="w-6 h-6 theme-text-secondary" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+            </button>
+            <h2 class="text-2xl font-bold theme-text-primary mb-4">About This Site</h2>
+            <p class="theme-text-primary">This website is a humble offering dedicated to Lord Hanuman. It provides the sacred Hanuman Chalisa in multiple languages to make it accessible to devotees worldwide. Our goal is to create a serene and beautiful digital space for prayer and reflection.</p>
+            <p class="theme-text-primary mt-2">May the blessings of Pawan Putra Hanuman be with you always.</p>
+        </div>
     </div>
-  </section>
-  <!-- End Hero Section  -->
 
-  <!-- Service Section -->
-  <!-- <section id="services">
-    <div class="services container">
-      <div class="service-top">
-        <h1 class="section-title">Serv<span>i</span>ces</h1>
-        <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ipsum deleniti maiores pariatur assumenda quas
-          magni et, doloribus quod voluptate quasi molestiae magnam officiis dolorum, dolor provident atque molestias
-          voluptatum explicabo!</p>
-      </div>
-      <div class="service-bottom">
-        <div class="service-item">
-          <div class="icon"><img src="https://img.icons8.com/bubbles/100/000000/services.png" /></div>
-          <h2>Web Design</h2>
-          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Corporis debitis rerum, magni voluptatem sed
-            architecto placeat beatae tenetur officia quod</p>
+    <!-- Contact Modal -->
+    <div id="contact-modal" class="modal-container fixed inset-0 z-50 flex items-center justify-center p-4 hidden">
+        <div class="modal-content glass-card w-full max-w-md p-6 relative">
+            <button class="close-modal-btn absolute top-4 right-4 p-1 rounded-full hover:bg-black/10 dark:hover:bg-white/10">
+                <svg class="w-6 h-6 theme-text-secondary" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+            </button>
+            <h2 class="text-2xl font-bold theme-text-primary mb-4">Contact Us</h2>
+            <p class="theme-text-primary mb-4">For any suggestions or feedback, please feel free to reach out.</p>
+            <form action="#">
+                <div class="mb-4">
+                    <label for="name" class="block theme-text-secondary text-sm font-medium mb-1">Name</label>
+                    <input type="text" id="name" class="w-full p-2 rounded-lg bg-black/10 dark:bg-white/10 border border-transparent focus:border-orange-400 outline-none theme-text-primary">
+                </div>
+                <div class="mb-4">
+                    <label for="email" class="block theme-text-secondary text-sm font-medium mb-1">Email</label>
+                    <input type="email" id="email" class="w-full p-2 rounded-lg bg-black/10 dark:bg-white/10 border border-transparent focus:border-orange-400 outline-none theme-text-primary">
+                </div>
+                <div class="mb-4">
+                    <label for="message" class="block theme-text-secondary text-sm font-medium mb-1">Message</label>
+                    <textarea id="message" rows="4" class="w-full p-2 rounded-lg bg-black/10 dark:bg-white/10 border border-transparent focus:border-orange-400 outline-none theme-text-primary"></textarea>
+                </div>
+                <button type="submit" class="w-full py-2 px-4 rounded-lg font-semibold theme-active-tab transition-opacity hover:opacity-90">Send Message</button>
+            </form>
         </div>
-        <div class="service-item">
-          <div class="icon"><img src="https://img.icons8.com/bubbles/100/000000/services.png" /></div>
-          <h2>Web Design</h2>
-          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Corporis debitis rerum, magni voluptatem sed
-            architecto placeat beatae tenetur officia quod</p>
-        </div>
-        <div class="service-item">
-          <div class="icon"><img src="https://img.icons8.com/bubbles/100/000000/services.png" /></div>
-          <h2>Web Design</h2>
-          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Corporis debitis rerum, magni voluptatem sed
-            architecto placeat beatae tenetur officia quod</p>
-        </div>
-        <div class="service-item">
-          <div class="icon"><img src="https://img.icons8.com/bubbles/100/000000/services.png" /></div>
-          <h2>Web Design</h2>
-          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Corporis debitis rerum, magni voluptatem sed
-            architecto placeat beatae tenetur officia quod</p>
-        </div>
-      </div>
     </div>
-  </section>
-  <!-- End Service Section -->
-
-  <!-- Projects Section -->
-  <section id="hanumanchalisa">
-    <div class="projects container">
-      <div class="projects-header">
-        <h1 class="section-title">हनुमान <span>चालीसा</span></h1>
-      </div>
-
-      <div class="project-item">
-        <div class="project-info">
-          <h1><span class="doha-chopai-color-Red">दोहा</span></h1><br />
-          <p class="mb-3"></p>
-          <p>श्रीगुरु चरन सरोज रज, निज मनु मुकुरु सुधारि।</p>
-          <p>बरनऊं रघुबर बिमल जसु, जो दायकु फल चारि॥</p><br /><br>
-
-          <p>बुद्धिहीन तनु जानिके, सुमिरौं पवन-कुमार।</p>
-          <p>बल बुद्धि विद्या देहु मोही, हरहु कलेश विकार॥</p><br /><br /><br />
-
-          <h1><span class="doha-chopai-color-Red">चौपाई</span></h1><br /><br />
-          <p class="mb-3"></p>
-
-          <p>जय हनुमान ज्ञान गुन सागर।</p>
-          <p>जय कपीश तिहु लोक उजागर <span class="number-color-green">॥ १ ॥</span></p><br /><br />
-
-
-          <p>राम दूत अतुलित बल धामा।</p>
-          <p>अंजनि पुत्र पवनसुत नामा <span class="number-color-aqua">॥ २ ॥</span></p><br /><br />
-
-
-          <p>महावीर विक्रम बजरंगी।</p>
-          <p>कुमति निवार सुमति के संगी <span class="number-color-green">॥ ३ ॥</span></p><br /><br />
-
-
-          <p>कंचन वर्ण विराज सुवेशा।</p>
-          <p>कानन कुंडल कुंचित केशा <span class="number-color-aqua">॥ ४ ॥</span></p><br /><br />
-
-
-          <p>हाथ वज्र अरु ध्वजा विराजै।</p>
-          <p>काँधे मूँज जनेऊ साजै <span class="number-color-green">॥ ५ ॥</span></p><br /><br />
-
-
-          <p>शंकर स्वयं केसरी नंदन।</p>
-          <p>तेज प्रताप महा जग वंदन <span class="number-color-aqua">॥ ६ ॥</span></p><br /><br />
-
-
-          <p>विद्यावान गुणी अति चातुर।</p>
-          <p>राम काज करिबे को आतुर <span class="number-color-green">॥ ७ ॥</span></p><br /><br />
-
-
-          <p>प्रभु चरित्र सुनिबे को रसिया।</p>
-          <p>राम लखन सीता मन बसिया <span class="number-color-aqua">॥ ८ ॥</span></p><br /><br />
-
-
-          <p>सूक्ष्म रूप धरी सियहिं दिखावा।</p>
-          <p>विकट रूप धरि लंक जरावा <span class="number-color-green">॥ ९ ॥</span></p><br /><br />
-
-
-          <p>भीम रूप धरि असुर सँहारे।</p>
-          <p>रामचन्द्र जी के काज सँवारे <span class="number-color-aqua">॥ १० ॥</span></p><br /><br />
-
-
-          <p>लाय सँजीवन लखन जियाए।</p>
-          <p>श्रीरघुवीर हरषि उर लाए <span class="number-color-green">॥ ११ ॥</span></p><br /><br />
-
-
-          <p>रघुपति कीन्ही बहुत बडाई।</p>
-          <p>तुम मम प्रिय भरतहिसम भाई <span class="number-color-aqua">॥ १२ ॥</span></p><br /><br />
-
-
-          <p>सहस्त्र बदन तुम्हरो यश गावैं।</p>
-          <p>अस कहि श्रीपति कंठ लगावैं <span class="number-color-green">॥ १३ ॥</span></p><br /><br />
-
-
-          <p>सनकादिक ब्रह्मादि मुनीशा।</p>
-          <p>नारद शारद सहित अहीशा <span class="number-color-aqua">॥ १४ ॥</span></p><br /><br />
-
-
-          <p>यम कुबेर दिगपाल जहाँते।</p>
-          <p>कवि कोविद कहि सकैं कहाँते <span class="number-color-green">॥ १५ ॥</span></p><br /><br />
-
-
-          <p>तुम उपकार सुग्रीवहि कीन्हा।</p>
-          <p>राम मिलाय राजपद दीन्हा <span class="number-color-aqua">॥ १६ ॥</span></p><br /><br />
-
-
-          <p>तुम्हरो मन्त्र विभीषण माना।</p>
-          <p>लंकेश्वर भए सब जग जाना <span class="number-color-green">॥ १७ ॥</span></p><br /><br />
-
-
-          <p>युग सहस्र योजन पर भानू।</p>
-          <p>लील्यो ताहि मधुर फल जानू <span class="number-color-aqua">॥ १८ ॥</span></p><br /><br />
-
-
-          <p>प्रभु मुद्रिका मेलि मुख माही।</p>
-          <p>जलधि लाँघि गये अचरज नाही <span class="number-color-green">॥ १९ ॥</span></p><br /><br />
-
-
-          <p>दुर्गम काज जगत के जेते ।</p>
-          <p>सुगम अनुग्रह तुम्हरे तेते <span class="number-color-aqua">॥ २० ॥</span></p><br /><br />
-
-
-          <p>राम दुआरे तुम रखवारे।</p>
-          <p>होत न आज्ञा बिन पैसारे <span class="number-color-green">॥ २१ ॥</span></p><br /><br />
-
-
-          <p>सब सुख लहै तुम्हारी शरना।</p>
-          <p>तुम रक्षक काहू को डरना <span class="number-color-aqua">॥ २२ ॥</span></p><br /><br />
-
-
-          <p>आपन तेज सम्हारो आपै।</p>
-          <p>तीनौं लोक हाँक ते काँपे <span class="number-color-green">॥ २३ ॥</span></p><br /><br />
-
-
-          <p>भूत पिशाच निकट नहिं आवै।</p>
-          <p>महावीर जब नाम सुनावै <span class="number-color-aqua">॥ २४ ॥</span></p><br /><br />
-
-
-          <p>नासै रोग हरै सब पीरा।</p>
-          <p>जपत निरंतर हनुमत बीरा <span class="number-color-green">॥ २५ ॥</span></p><br /><br />
-
-
-          <p>संकट से हनुमान छुड़ावै।</p>
-          <p>मन क्रम बचन ध्यान जो लावै <span class="number-color-aqua">॥ २६ ॥</span></p><br /><br />
-
-
-          <p>सब पर राम तपस्वी राजा।</p>
-          <p>तिन के काज सकल तुम साजा <span class="number-color-green">॥ २७ ॥</span></p><br /><br />
-
-
-          <p>और मनोरथ जो कोई लावै।</p>
-          <p>सोई अमित जीवन फल पावै <span class="number-color-aqua">॥ २८ ॥</span></p><br /><br />
-
-
-          <p>चारों युग परताप तुम्हारा।</p>
-          <p>है परसिद्ध जगत उजियारा <span class="number-color-green">॥ २९ ॥</span></p><br /><br />
-
-
-          <p>साधु संत के तुम रखवारे।</p>
-          <p>असुर निकंदन राम दुलारे <span class="number-color-aqua">॥ ३० ॥</span></p><br /><br />
-
-
-          <p>अष्ट सिद्धि नव निधि के दाता।</p>
-          <p>अस बर दीन्ह जानकी माता <span class="number-color-green">॥ ३१ ॥</span></p><br /><br />
-
-
-          <p>राम रसायन तुम्हरे पासा।</p>
-          <p>सदा रहो रघुपति के दासा <span class="number-color-aqua">॥ ३२ ॥</span></p><br /><br />
-
-
-          <p>तुम्हरे भजन राम को भावै।</p>
-          <p>जनम जनम के दुख बिसरावै <span class="number-color-green">॥ ३३ ॥</span></p><br /><br />
-
-
-          <p>अंत काल रघुपति पुर जाई।</p>
-          <p>जहाँ जन्म हरिभक्त कहाई <span class="number-color-aqua">॥ ३४ ॥</span></p><br /><br />
-
-
-          <p>और देवता चित्त न धरई।</p>
-          <p>हनुमत सेइ सर्व सुख करई <span class="number-color-green">॥ ३५ ॥</span></p><br /><br />
-
-
-          <p>संकट हटै मिटै सब पीरा।</p>
-          <p>जो सुमिरै हनुमत बलबीरा <span class="number-color-aqua">॥ ३६ ॥</span></p><br /><br />
-
-
-          <p>जय जय जय हनुमान गोसाईं।</p>
-          <p>कृपा करो गुरुदेव की नाईं <span class="number-color-green">॥ ३७ ॥</span></p><br /><br />
-
-
-          <p>यह सत बार पाठ कर जोई।</p>
-          <p>छूटहि बंदि महा सुख होई <span class="number-color-aqua">॥ ३८ ॥</span></p><br /><br />
-
-
-          <p>जो यह पढ़ै हनुमान चालीसा।</p>
-          <p>होय सिद्धि साखी गौरीसा <span class="number-color-green">॥ ३९ ॥</span></p><br /><br />
-
-
-          <p>तुलसीदास सदा हरि चेरा।</p>
-          <p>कीजै नाथ हृदय मह डेरा <span class="number-color-aqua">॥ ४० ॥</span></p><br /><br />
-
-
-          <h1><span class="doha-chopai-color-Red">दोहा</span></h1><br /><br />
-          <p class="mb-3"></p>
-
-
-          <p>पवनतनय संकट हरण मंगल मूरति रूप।</p>
-          <p>राम लखन सीता सहित हृदय बसहु सुर भूप॥</p><br /><br />
-
-
-
-
+    
+    <!-- Donations Modal -->
+    <div id="donations-modal" class="modal-container fixed inset-0 z-50 flex items-center justify-center p-4 hidden">
+        <div class="modal-content glass-card w-full max-w-md p-6 relative overflow-y-auto max-h-[90vh]">
+            <button class="close-modal-btn absolute top-4 right-4 p-1 rounded-full hover:bg-black/10 dark:hover:bg-white/10">
+                <svg class="w-6 h-6 theme-text-secondary" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+            </button>
+            <div class="w-full max-w-md space-y-6">
+                <div class="text-center">
+                    <h1 class="text-2xl sm:text-3xl font-bold theme-text-primary tracking-tight">Support Our Work</h1>
+                    <p class="theme-text-secondary mt-2 text-sm sm:text-base">Your generous donation helps us maintain and improve this site.</p>
+                </div>
+                
+                <!-- Direct App Payments -->
+                <div class="space-y-4">
+                    <h2 class="text-lg font-semibold theme-accent-color">1. Pay Directly via App</h2>
+                    <p class="text-center text-sm theme-text-secondary">(Works on mobile only)</p>
+                    <div class="grid grid-cols-3 gap-4">
+                        <a href="upi://pay?pa=9824594156@okbizaxis&pn=Your%20Name&cu=INR" class="bg-black/10 dark:bg-white/10 hover:bg-black/20 dark:hover:bg-white/20 p-4 rounded-lg flex flex-col items-center justify-center space-y-2 transition-all duration-300 transform hover:scale-105">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f2/Google_Pay_Logo.svg/2560px-Google_Pay_Logo.svg.png" alt="Google Pay" class="h-6 object-contain">
+                            <span class="font-semibold theme-text-primary text-xs">Google Pay</span>
+                        </a>
+                        <a href="phonepe://pay?pa=9824594156@okbizaxis&pn=Your%20Name&cu=INR" class="bg-black/10 dark:bg-white/10 hover:bg-black/20 dark:hover:bg-white/20 p-4 rounded-lg flex flex-col items-center justify-center space-y-2 transition-all duration-300 transform hover:scale-105">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/7/71/PhonePe_Logo.svg" alt="PhonePe" class="h-6 object-contain">
+                            <span class="font-semibold theme-text-primary text-xs">PhonePe</span>
+                        </a>
+                        <a href="bhim://upi/pay?pa=9824594156@okbizaxis&pn=Your%20Name&cu=INR" class="bg-black/10 dark:bg-white/10 hover:bg-black/20 dark:hover:bg-white/20 p-4 rounded-lg flex flex-col items-center justify-center space-y-2 transition-all duration-300 transform hover:scale-105">
+                            <img src="https://upload.wikimedia.org/wikipedia/en/6/65/BHIM_SVG_Logo.svg" alt="BHIM UPI" class="h-6 object-contain">
+                            <span class="font-semibold theme-text-primary text-xs">BHIM</span>
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="relative"><div class="absolute inset-0 flex items-center"><div class="w-full border-t border-white/20"></div></div><div class="relative flex justify-center"><span class="bg-transparent px-2 text-sm theme-text-secondary">OR</span></div></div>
+                
+                <!-- Scan and Pay -->
+                <div class="space-y-4">
+                    <h2 class="text-lg font-semibold theme-accent-color">2. Scan & Pay</h2>
+                    <div class="bg-white/90 p-4 rounded-lg flex justify-center">
+                        <img src="https://hookstar1993.github.io/paymehook/qr-9824594156@okbizaxis.png" alt="QR Code for Payment" class="rounded-md w-full max-w-[200px]">
+                    </div>
+                </div>
+
+                <div class="relative"><div class="absolute inset-0 flex items-center"><div class="w-full border-t border-white/20"></div></div><div class="relative flex justify-center"><span class="bg-transparent px-2 text-sm theme-text-secondary">OR</span></div></div>
+
+                <!-- UPI ID -->
+                <div class="space-y-4">
+                    <h2 class="text-lg font-semibold theme-accent-color">3. Pay with UPI ID</h2>
+                    <div class="bg-black/10 dark:bg-white/10 p-3 rounded-lg flex justify-between items-center">
+                        <span id="upiId" class="font-medium theme-text-primary text-sm sm:text-base break-all">9824594156@okbizaxis</span>
+                        <button onclick="copyDonationDetails('upiId', this)" title="Copy UPI ID" class="p-2 rounded-lg transition-all duration-200 bg-black/10 hover:bg-black/20 dark:bg-white/10 dark:hover:bg-white/20 flex-shrink-0 ml-3">
+                           <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 theme-text-secondary" viewBox="0 0 20 20" fill="currentColor"><path d="M7 9a2 2 0 012-2h6a2 2 0 012 2v6a2 2 0 01-2 2H9a2 2 0 01-2-2V9z" /><path d="M5 3a2 2 0 00-2 2v6a2 2 0 002 2V5h6a2 2 0 00-2-2H5z" /></svg>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Bank Transfer -->
+                 <div class="space-y-4">
+                    <h2 class="text-lg font-semibold theme-accent-color">4. Direct Bank Transfer</h2>
+                    <div class="bg-black/10 dark:bg-white/10 p-3 rounded-lg space-y-3 text-sm sm:text-base">
+                        <div class="flex justify-between items-center">
+                            <span class="theme-text-secondary">Account Name:</span>
+                            <div class="flex items-center space-x-2">
+                                <span id="accName" class="font-medium theme-text-primary text-right">SAVANI HARDEEP M.</span>
+                                <button onclick="copyDonationDetails('accName', this)" title="Copy Account Name" class="p-1.5 rounded-lg transition-all duration-200 bg-black/10 hover:bg-black/20 dark:bg-white/10 dark:hover:bg-white/20 flex-shrink-0"><svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 theme-text-secondary" viewBox="0 0 20 20" fill="currentColor"><path d="M7 9a2 2 0 012-2h6a2 2 0 012 2v6a2 2 0 01-2 2H9a2 2 0 01-2-2V9z" /><path d="M5 3a2 2 0 00-2 2v6a2 2 0 002 2V5h6a2 2 0 00-2-2H5z" /></svg></button>
+                            </div>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span class="theme-text-secondary">Bank Name:</span>
+                            <div class="flex items-center space-x-2">
+                                <span id="bankName" class="font-medium theme-text-primary text-right">STATE BANK OF INDIA</span>
+                                <button onclick="copyDonationDetails('bankName', this)" title="Copy Bank Name" class="p-1.5 rounded-lg transition-all duration-200 bg-black/10 hover:bg-black/20 dark:bg-white/10 dark:hover:bg-white/20 flex-shrink-0"><svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 theme-text-secondary" viewBox="0 0 20 20" fill="currentColor"><path d="M7 9a2 2 0 012-2h6a2 2 0 012 2v6a2 2 0 01-2 2H9a2 2 0 01-2-2V9z" /><path d="M5 3a2 2 0 00-2 2v6a2 2 0 002 2V5h6a2 2 0 00-2-2H5z" /></svg></button>
+                            </div>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span class="theme-text-secondary">Account No:</span>
+                            <div class="flex items-center space-x-2">
+                                <span id="accNum" class="font-medium theme-text-primary">40003791171</span>
+                                <button onclick="copyDonationDetails('accNum', this)" title="Copy Account Number" class="p-1.5 rounded-lg transition-all duration-200 bg-black/10 hover:bg-black/20 dark:bg-white/10 dark:hover:bg-white/20 flex-shrink-0"><svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 theme-text-secondary" viewBox="0 0 20 20" fill="currentColor"><path d="M7 9a2 2 0 012-2h6a2 2 0 012 2v6a2 2 0 01-2 2H9a2 2 0 01-2-2V9z" /><path d="M5 3a2 2 0 00-2 2v6a2 2 0 002 2V5h6a2 2 0 00-2-2H5z" /></svg></button>
+                            </div>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span class="theme-text-secondary">IFSC Code:</span>
+                            <div class="flex items-center space-x-2">
+                                <span id="ifscCode" class="font-medium theme-text-primary">SBIN0060236</span>
+                                <button onclick="copyDonationDetails('ifscCode', this)" title="Copy IFSC Code" class="p-1.5 rounded-lg transition-all duration-200 bg-black/10 hover:bg-black/20 dark:bg-white/10 dark:hover:bg-white/20 flex-shrink-0"><svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 theme-text-secondary" viewBox="0 0 20 20" fill="currentColor"><path d="M7 9a2 2 0 012-2h6a2 2 0 012 2v6a2 2 0 01-2 2H9a2 2 0 01-2-2V9z" /><path d="M5 3a2 2 0 00-2 2v6a2 2 0 002 2V5h6a2 2 0 00-2-2H5z" /></svg></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- WhatsApp Confirmation -->
+                <div class="space-y-4 pt-4">
+                    <h2 class="text-lg font-semibold theme-accent-color">5. Confirm on WhatsApp</h2>
+                    <p class="text-center text-sm theme-text-secondary">After payment, send us the screenshot for confirmation.</p>
+                    <a href="https://wa.me/919824594156?text=Hello!%20I%20have%20completed%20the%20payment.%20Here%20is%20the%20screenshot." target="_blank" rel="noopener noreferrer" class="w-full bg-green-500/80 hover:bg-green-500/90 text-white font-bold py-3 px-4 rounded-lg flex items-center justify-center space-x-3 transition-all duration-300 transform hover:scale-105">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.894 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01s-.521.074-.792.372c-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.626.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
+                        <span>Send Screenshot</span>
+                    </a>
+                </div>
+            </div>
         </div>
-      </div>
     </div>
-  </section>
-  <!-- End Projects Section -->
 
-  <!-- About Section
-  <section id="about">
-    <div class="about container">
-      <div class="col-left">
-        <div class="about-img">
-          <img src="./img/img-2.png" alt="img">
-        </div>
-      </div>
-      <div class="col-right">
-        <h1 class="section-title">About <span>me</span></h1>
-        <h2>Front End Developer</h2>
-        <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Asperiores, velit alias eius non illum beatae atque
-          repellat ratione qui veritatis repudiandae adipisci maiores. At inventore necessitatibus deserunt
-          exercitationem cumque earum omnis ipsum rem accusantium quis, quas quia, accusamus provident suscipit magni!
-          Expedita sint ad dolore, commodi labore nihil velit earum ducimus nulla quae nostrum fugit aut, deserunt
-          reprehenderit libero enim!</p>
-        <a href="#" class="cta">Download Resume</a>
-      </div>
-    </div>
-  </section>
-   End About Section -->
+    <script>
+        // --- DATA FOR HANUMAN CHALISA ---
+        const chalisaData = {
+            gujarati: `
+                <article class="gujarati">
+                    <p class="font-semibold mb-4">|| દોહા ||</p>
+                    <p>શ્રીગુરુ ચરણ સરોજ રજ, નિજ મનુ મુકુરુ સુધારિ।</p>
+                    <p class="mb-4">બરનઉઁ રઘુબર બિમલ જસુ, જો દાયકુ ફલ ચારિ॥</p>
+                    <p>બુદ્ધિહીન તનુ જાનિકે, સુમિરૌં પવન-કુમાર।</p>
+                    <p class="mb-4">બલ બુદ્ધિ બિદ્યા દેહુ મોહિં, હરહુ કલેસ બિકાર॥</p>
+                    <p class="font-semibold my-4">|| ચૌપાઈ ||</p>
+                    <p>જય હનુમાન જ્ઞાન ગુન સાગર।</p><p class="mb-4">જય કપીસ તિહુઁ લોક ઉજાગર ॥ ૧ ॥</p>
+                    <p>રામ દૂત અતુલિત બલ ધામા।</p><p class="mb-4">અંજનિ-પુત્ર પવનસુત નામા ॥ ૨ ॥</p>
+                    <p>મહાબીર બિક્રમ બજરંગી।</p><p class="mb-4">કુમતિ નિવાર સુમતિ કે સંગી ॥ ૩ ॥</p>
+                    <p>કંચન બરન બિરાજ સુબેસા।</p><p class="mb-4">કાનન કુંડલ કુંચિત કેસા ॥ ૪ ॥</p>
+                    <p>હાથ બજ્ર ઔ ધ્વજા બિરાજૈ।</p><p class="mb-4">કાઁધે મૂઁજ જનેઊ સાજૈ ॥ ૫ ॥</p>
+                    <p>સંકર સુવન કેસરીનંદન।</p><p class="mb-4">તેજ પ્રતાપ મહા જગ બંદન ॥ ૬ ॥</p>
+                    <p>બિદ્યાવાન ગુની અતિ ચાતુર।</p><p class="mb-4">રામ કાજ કરિબે કો આતુર ॥ ૭ ॥</p>
+                    <p>પ્રભુ ચરિત્ર સુનિબે કો રસિયા।</p><p class="mb-4">રામ લખન સીતા મન બસિયા ॥ ૮ ॥</p>
+                    <p>સૂક્ષ્મ રૂપ ધરિ સિયહિં દિખાવા।</p><p class="mb-4">બિકટ રૂપ ધરિ લંક જરાવા ॥ ૯ ॥</p>
+                    <p>ભીમ રૂપ ધરિ અસુર સઁહારે।</p><p class="mb-4">રામચંદ્ર કે કાજ સઁવારે ॥ ૧૦ ॥</p>
+                    <p>લાય સજીવન લખન જિયાયે।</p><p class="mb-4">શ્રીરઘુબીર હરષિ ઉર લાયે ॥ ૧૧ ॥</p>
+                    <p>રઘુપતિ કીન્હી બહુત બડાઈ।</p><p class="mb-4">તુમ મમ પ્રિય ભરતહિ સમ ભાઈ ॥ ૧૨ ॥</p>
+                    <p>સહસ બદન તુમ્હરો જસ ગાવૈં।</p><p class="mb-4">અસ કહિ શ્રીપતિ કંઠ લગાવૈં ॥ ૧૩ ॥</p>
+                    <p>સનકાદિક બ્રહ્માદિ મુનીસા।</p><p class="mb-4">નારદ સારદ સહિત અહીસા ॥ ૧૪ ॥</p>
+                    <p>જમ કુબેર દિગપાલ જહાઁ તે।</p><p class="mb-4">કબિ કોબિદ કહિ સકે કહાઁ તે ॥ ૧૫ ॥</p>
+                    <p>તુમ ઉપકાર સુગ્રીવહિં કીન્હા।</p><p class="mb-4">રામ મિલાય રાજ પદ દીન્હા ॥ ૧૬ ॥</p>
+                    <p>તુમ્હરો મંત્ર બિભીષન માના।</p><p class="mb-4">લંકેસ્વર ભએ સબ જગ જાના ॥ ૧૭ ॥</p>
+                    <p>જુગ સહસ્ર જોજન પર ભાનૂ।</p><p class="mb-4">લીલ્યો તાહિ મધુર ફલ જાનૂ ॥ ૧૮ ॥</p>
+                    <p>પ્રભુ મુદ્રિકા મેલિ મુખ માહીં।</p><p class="mb-4">જલધિ લાઁઘિ ગયે અચરજ નાહીં ॥ ૧૯ ॥</p>
+                    <p>દુર્ગમ કાજ જગત કે જેતે।</p><p class="mb-4">સુગમ અનુગ્રહ તુમ્હરે તેતે ॥ ૨૦ ॥</p>
+                    <p>રામ દુઆરે તુમ રખવારે।</p><p class="mb-4">હોત ન આજ્ઞા બિનુ પૈસારે ॥ ૨૧ ॥</p>
+                    <p>સબ સુખ લહૈ તુમ્હારી સરના।</p><p class="mb-4">તુમ રચ્છક કાહૂ કો ડર ના ॥ ૨૨ ॥</p>
+                    <p>આપન તેજ સમ્હારો આપૈ।</p><p class="mb-4">તીનોં લોક હાઁક તેં કાઁપૈ ॥ ૨૩ ॥</p>
+                    <p>ભૂત પિસાચ નિકટ નહિં આવૈ।</p><p class="mb-4">મહાબીર જબ નામ સુનાવૈ ॥ २४ ॥</p>
+                    <p>નાસૈ રોગ હરૈ સબ પીરા।</p><p class="mb-4">જપત નિરંતર હનુમત બીરા ॥ ૨૫ ॥</p>
+                    <p>સંકટ તેં હનુમાન છુડાવૈ।</p><p class="mb-4">મન ક્રમ બચન ધ્યાન જો લાવૈ ॥ ૨૬ ॥</p>
+                    <p>સબ પર રામ તપસ્વી રાજા।</p><p class="mb-4">તિન કે કાજ સકલ તુમ સાજા ॥ ૨૭ ॥</p>
+                    <p>ઔર મનોરથ જો કોઈ લાવૈ।</p><p class="mb-4">સોઇ અમિત જીવન ફલ પાવૈ ॥ ૨૮ ॥</p>
+                    <p>ચારોં જુગ પરતાપ તુમ્હારા।</p><p class="mb-4">હૈ પરસિદ્ધ જગત ઉજિયારા ॥ ૨૯ ॥</p>
+                    <p>સાધુ-સંત કે તુમ રખવારે।</p><p class="mb-4">અસુર નિકંદન રામ દુલારે ॥ ૩૦ ॥</p>
+                    <p>અષ્ટ સિદ્ધિ નૌ નિધિ કે દાતા।</p><p class="mb-4">અસ બર દીન જાનકી માતા ॥ ૩૧ ॥</p>
+                    <p>રામ રસાયન તુમ્હરે પાસા।</p><p class="mb-4">સદા રહો રઘુપતિ કે દાસા ॥ ૩૨ ॥</p>
+                    <p>તુમ્હરે ભજન રામ કો પાવૈ।</p><p class="mb-4">જનમ-જનમ કે દુખ બિસરાવૈ ॥ ૩૩ ॥</p>
+                    <p>અંત કાલ રઘુબર પુર જાઈ।</p><p class="mb-4">જહાઁ જન્મ હરિ-ભક્ત કહાઈ ॥ ૩૪ ॥</p>
+                    <p>ઔર દેવતા ચિત્ત ન ધરઈ।</p><p class="mb-4">હનુમત સેઇ સર્બ સુખ કરઈ ॥ ૩૫ ॥</p>
+                    <p>સંકટ કટૈ મિટૈ સબ પીરા।</p><p class="mb-4">જો સુમિરૈ હનુમત બલબીરા ॥ ૩૬ ॥</p>
+                    <p>જૈ જૈ જૈ હનુમાન ગોસાઈં।</p><p class="mb-4">કૃપા કરહુ ગુરુદેવ કી નાઈં ॥ ૩૭ ॥</p>
+                    <p>જો સત બાર પાઠ કર કોઈ।</p><p class="mb-4">છૂટહિ બંદિ મહા સુખ હોઈ ॥ ૩૮ ॥</p>
+                    <p>જો યહ પઢૈ હનુમાન ચાલીસા।</p><p class="mb-4">હોય સિદ્ધિ સાખી ગૌરીસા ॥ ૩૯ ॥</p>
+                    <p>તુલસીદાસ સદા હરિ ચેરા।</p><p class="mb-4">કીજૈ નાથ હૃદય મહઁ ડેરા ॥ ૪૦ ॥</p>
+                    <p class="font-semibold my-4">|| દોહા ||</p>
+                    <p>પવન તનય સંકટ હરન, મંગલ મૂરતિ રૂપ।</p>
+                    <p class="mb-4">રામ લખન સીતા સહિત, હૃદય બસહુ સુર ભૂપ॥</p>
+                </article>
+            `,
+            sanskrit: `
+                <article class="devanagari">
+                    <p class="font-semibold mb-4">॥ दोहा ॥</p>
+                    <p>श्रीगुरु चरन सरोज रज, निज मनु मुकुरु सुधारि।</p>
+                    <p class="mb-4">बरनउँ रघुबर बिमल जसु, जो दायकु फल चारि॥</p>
+                    <p>बुद्धिहीन तनु जानिके, सुमिरौं पवन-कुमार।</p>
+                    <p class="mb-4">बल बुधि बिद्या देहु मोहिं, हरहु कलेस बिकार॥</p>
+                    <p class="font-semibold my-4">॥ चौपाई ॥</p>
+                    <p>जय हनुमान ज्ञान गुन सागर।</p><p class="mb-4">जय कपीस तिहुँ लोक उजागर ॥ १ ॥</p>
+                    <p>राम दूत अतुलित बल धामा।</p><p class="mb-4">अञ्जनि-पुत्र पवनसुत नामा ॥ २ ॥</p>
+                    <p>महाबीर बिक्रम बजरङ्गी।</p><p class="mb-4">कुमति निवार सुमति के सङ्गी ॥ ३ ॥</p>
+                    <p>कञ्चन बरन बिराज सुबेसा।</p><p class="mb-4">कानन कुण्डल कुञ्चित केसा ॥ ४ ॥</p>
+                    <p>हाथ बज्र औ ध्वजा बिराजै।</p><p class="mb-4">काँधे मूँज जनेऊ साजै ॥ ५ ॥</p>
+                    <p>सङ्कर सुवन केसरीनन्दन।</p><p class="mb-4">तेज प्रताप महा जग बन्दन ॥ ६ ॥</p>
+                    <p>बिद्यावान गुनी अति चातुर।</p><p class="mb-4">राम काज करिबे को आतुर ॥ ७ ॥</p>
+                    <p>प्रभु चरित्र सुनिबे को रसिया।</p><p class="mb-4">राम लखन सीता मन बसिया ॥ ८ ॥</p>
+                    <p>सूक्ष्म रूप धरि सियहिं दिखावा।</p><p class="mb-4">बिकट रूप धरि लङ्क जरावा ॥ ९ ॥</p>
+                    <p>भीम रूप धरि असुर सँहारे।</p><p class="mb-4">रामचन्द्र के काज सँवारे ॥ १० ॥</p>
+                    <p>लाय सञ्जीवन लखन जियाये।</p><p class="mb-4">श्रीरघुबीर हरषि उर लाये ॥ ११ ॥</p>
+                    <p>रघुपति कीन्ही बहुत बडाई।</p><p class="mb-4">तुम मम प्रिय भरतहि सम भाई ॥ १२ ॥</p>
+                    <p>सहस बदन तुम्हरो जस गावैं।</p><p class="mb-4">अस कहि श्रीपति कण्ठ लगावैं ॥ १३ ॥</p>
+                    <p>सनकादिक ब्रह्मादि मुनीसा।</p><p class="mb-4">नारद सारद सहित अहीसा ॥ १४ ॥</p>
+                    <p>जम कुबेर दिगपाल जहाँ ते।</p><p class="mb-4">कबि कोबिद कहि सके कहाँ ते ॥ १५ ॥</p>
+                    <p>तुम उपकार सुग्रीवहिं कीन्हा।</p><p class="mb-4">राम मिलाय राज पद दीन्हा ॥ १६ ॥</p>
+                    <p>तुम्हरो मन्त्र बिभीषन माना।</p><p class="mb-4">लङ्केस्वर भए सब जग जाना ॥ १७ ॥</p>
+                    <p>जुग सहस्र जोजन पर भानू।</p><p class="mb-4">लील्यो ताहि मधुर फल जानू ॥ १८ ॥</p>
+                    <p>प्रभु मुद्रिका मेलि मुख माहीं।</p><p class="mb-4">जलधि लाँघि गये अचरज नाहीं ॥ १९ ॥</p>
+                    <p>दुर्गम काज जगत के जेते।</p><p class="mb-4">सुगम अनुग्रह तुम्हरे तेते ॥ २० ॥</p>
+                    <p>राम दुआरे तुम रखवारे।</p><p class="mb-4">होत न आज्ञा बिनु पैसारे ॥ २१ ॥</p>
+                    <p>सब सुख लहै तुम्हारी सरना।</p><p class="mb-4">तुम रच्छक काहू को डर ना ॥ २२ ॥</p>
+                    <p>आपन तेज सम्हारो आपै।</p><p class="mb-4">तीनो लोक हाँक तें काँपै ॥ २३ ॥</p>
+                    <p>भूत पिसाच निकट नहिं आवै।</p><p class="mb-4">महाबीर जब नाम सुनावै ॥ २४ ॥</p>
+                    <p>नासै रोग हरै सब पीरा।</p><p class="mb-4">जपत निरन्तर हनुमत बीरा ॥ २५ ॥</p>
+                    <p>सङ्कट तें हनुमान छुडावै।</p><p class="mb-4">मन क्रम बचन ध्यान जो लावै ॥ २६ ॥</p>
+                    <p>सब पर राम तपस्वी राजा।</p><p class="mb-4">तिन के काज सकल तुम साजा ॥ २७ ॥</p>
+                    <p>और मनोरथ जो कोई लावै।</p><p class="mb-4">सोइ अमित जीवन फल पावै ॥ २૮ ॥</p>
+                    <p>चारो जुग परताप तुम्हारा।</p><p class="mb-4">है परसिद्ध जगत उजियारा ॥ २९ ॥</p>
+                    <p>साधु-सन्त के तुम रखवारे।</p><p class="mb-4">असुर निकन्दन राम दुलारे ॥ ३० ॥</p>
+                    <p>अष्ट सिद्घि नौ निधि के दाता।</p><p class="mb-4">अस बर दीन जानकी माता ॥ ३१ ॥</p>
+                    <p>राम रसायन तुम्हरे पासा।</p><p class="mb-4">सदा रहो रघुपति के दासा ॥ ३२ ॥</p>
+                    <p>तुम्हरे भजन राम को पावै।</p><p class="mb-4">जनम-जनમ કે દુખ બિસરાવૈ ॥ ૩૩ ॥</p>
+                    <p>अन्त काल रघुबर पुर जाई।</p><p class="mb-4">जहाँ जन्म हरि-भक्त कहाई ॥ ३४ ॥</p>
+                    <p>और देवता चित्त न धरई।</p><p class="mb-4">हनुमत सेइ सर्ब सुख करई ॥ ३५ ॥</p>
+                    <p>सङ्कट कटै मिटै सब पीरा।</p><p class="mb-4">जो सुमिरै हनुमत बलबीरा ॥ ३६ ॥</p>
+                    <p>जै जै जै हनुमान गोसाईं।</p><p class="mb-4">कृपा करहु गुरुदेव की नाईं ॥ ३७ ॥</p>
+                    <p>जो सत बार पाठ कर कोई।</p><p class="mb-4">छूटहि बन्दि महा सुख होई ॥ ३८ ॥</p>
+                    <p>जो यह पढै हनुमान चालीसा।</p><p class="mb-4">होय सिद्घि साखी गौरीसा ॥ ३९ ॥</p>
+                    <p>तुलसीदास सदा हरि चेरा।</p><p class="mb-4">कीजै नाथ हृदय महँ डेरा ॥ ४० ॥</p>
+                    <p class="font-semibold my-4">॥ दोहा ॥</p>
+                    <p>पवन तनय सङ्कट हरन, मङ्गल मूरति रूप।</p>
+                    <p class="mb-4">राम लखन सीता सहित, हृदय बसहु सुर भूप॥</p>
+                </article>
+            `,
+            hindi: `
+                <article class="devanagari">
+                    <p class="font-semibold mb-4">॥ दोहा ॥</p>
+                    <p>श्रीगुरु चरन सरोज रज, निज मनु मुकुरु सुधारि।</p>
+                    <p class="mb-4">बरनउँ रघुबर बिमल जसु, जो दायकु फल चारि॥</p>
+                    <p>बुद्धिहीन तनु जानिके, सुमिरौं पवन-कुमार।</p>
+                    <p class="mb-4">बल बुधि बिद्या देहु मोहिं, हरहु कलेस बिकार॥</p>
+                    <p class="font-semibold my-4">॥ चौपाई ॥</p>
+                    <p>जय हनुमान ज्ञान गुन सागर।</p><p class="mb-4">जय कपीश तिहु लोक उजागर ॥ १ ॥</p>
+                    <p>राम दूत अतुलित बल धामा।</p><p class="mb-4">अंजनि पुत्र पवनसुत नामा ॥ २ ॥</p>
+                    <p>महावीर विक्रम बजरंगी।</p><p class="mb-4">कुमति निवार सुमति के संगी ॥ ३ ॥</p>
+                    <p>कंचन वर्ण विराज सुवेशा।</p><p class="mb-4">कानन कुंडल कुंचित केशा ॥ ४ ॥</p>
+                    <p>हाथ वज्र अरु ध्वजा विराजै।</p><p class="mb-4">काँधे मूँज जनेऊ साजै ॥ ५ ॥</p>
+                    <p>शंकर स्वयं केसरी नंदन।</p><p class="mb-4">तेज प्रताप महा जग वंदन ॥ ६ ॥</p>
+                    <p>विद्यावान गुणी अति चातुर।</p><p class="mb-4">राम काज करिबे को आतुर ॥ ७ ॥</p>
+                    <p>प्रभु चरित्र सुनिबे को रसिया।</p><p class="mb-4">राम लखन सीता मन बसिया ॥ ८ ॥</p>
+                    <p>सूक्ष्म रूप धरी सियहिं दिखावा।</p><p class="mb-4">विकट रूप धरि लंक जरावा ॥ ९ ॥</p>
+                    <p>भीम रूप धरि असुर सँहारे।</p><p class="mb-4">रामचन्द्र जी के काज सँवारे ॥ १० ॥</p>
+                    <p>लाय सँजीवन लखन जियाए।</p><p class="mb-4">श्रीरघुवीर हरषि उर लाए ॥ ११ ॥</p>
+                    <p>रघुपति कीन्ही बहुत बडाई।</p><p class="mb-4">तुम मम प्रिय भरतहिसम भाई ॥ १२ ॥</p>
+                    <p>सहस्त्र बदन तुम्हरो यश गावैं।</p><p class="mb-4">अस कहि श्रीपति कंठ लगावैं ॥ १३ ॥</p>
+                    <p>सनकादिक ब्रह्मादि मुनीशा।</p><p class="mb-4">नारद शारद सहित अहीशा ॥ १४ ॥</p>
+                    <p>यम कुबेर दिगपाल जहाँते।</p><p class="mb-4">कवि कोविद कहि सकैं कहाँते ॥ १५ ॥</p>
+                    <p>तुम उपकार सुग्रीवहि कीन्हा।</p><p class="mb-4">राम मिलाय राजपद दीन्हा ॥ १६ ॥</p>
+                    <p>तुम्हरो मन्त्र विभीषण माना।</p><p class="mb-4">लंकेश्वर भए सब जग जाना ॥ १७ ॥</p>
+                    <p>युग सहस्र योजन पर भानू।</p><p class="mb-4">लील्यो ताहि मधुर फल जानू ॥ १८ ॥</p>
+                    <p>प्रभु मुद्रिका मेलि मुख माही।</p><p class="mb-4">जलधि लाँघि गये अचरज नाही ॥ १९ ॥</p>
+                    <p>दुर्गम काज जगत के जेते।</p><p class="mb-4">सुगम अनुग्रह तुम्हरे तेते ॥ २० ॥</p>
+                    <p>राम दुआरे तुम रखवारे।</p><p class="mb-4">होत न आज्ञा बिन पैसारे ॥ २१ ॥</p>
+                    <p>सब सुख लहै तुम्हारी शरना।</p><p class="mb-4">तुम रक्षक काहू को डरना ॥ २२ ॥</p>
+                    <p>आपन तेज सम्हारो आपै।</p><p class="mb-4">तीनौं लोक हाँक ते काँपे ॥ २३ ॥</p>
+                    <p>भूत पिशाच निकट नहिं आवै।</p><p class="mb-4">महावीर जब नाम सुनावै ॥ २४ ॥</p>
+                    <p>नासै रोग हरै सब पीरा।</p><p class="mb-4">जपत निरंतर हनुमत बीरा ॥ २५ ॥</p>
+                    <p>संकट से हनुमान छुड़ावै।</p><p class="mb-4">मन क्रम बचन ध्यान जो लावै ॥ २६ ॥</p>
+                    <p>सब पर राम तपस्वी राजा।</p><p class="mb-4">तिन के काज सकल तुम साजा ॥ २७ ॥</p>
+                    <p>और मनोरथ जो कोई लावै।</p><p class="mb-4">सोई अमित जीवन फल पावै ॥ २८ ॥</p>
+                    <p>चारों युग परताप तुम्हारा।</p><p class="mb-4">है परसिद्ध जगत उजियारा ॥ २९ ॥</p>
+                    <p>साधु संत के तुम रखवारे।</p><p class="mb-4">असुर निकंदन राम दुलारे ॥ ३० ॥</p>
+                    <p>अष्ट सिद्धि नव निधि के दाता।</p><p class="mb-4">अस बर दीन्ह जानकी माता ॥ ३१ ॥</p>
+                    <p>राम रसायन तुम्हरे पासा।</p><p class="mb-4">सदा रहो रघुपति के दासा ॥ ३२ ॥</p>
+                    <p>तुम्हरे भजन राम को भावै।</p><p class="mb-4">जनम जनम के दुख बिसरावै ॥ ३३ ॥</p>
+                    <p>अंत काल रघुपति पुर जाई।</p><p class="mb-4">जहाँ जन्म हरिभक्त कहाई ॥ ३४ ॥</p>
+                    <p>और देवता चित्त न धरई।</p><p class="mb-4">हनुमत सेइ सर्व सुख करई ॥ ३५ ॥</p>
+                    <p>संकट हटै मिटै सब पीरा।</p><p class="mb-4">जो सुमिरै हनुमत बलबीरा ॥ ३६ ॥</p>
+                    <p>जय जय जय हनुमान गोसाईं।</p><p class="mb-4">कृपा करो गुरुदेव की नाईं ॥ ३७ ॥</p>
+                    <p>यह सत बार पाठ कर जोई।</p><p class="mb-4">छूटहि बंदि महा सुख होई ॥ ३८ ॥</p>
+                    <p>जो यह पढ़ै हनुमान चालीसा।</p><p class="mb-4">होय सिद्धि साखी गौरीसा ॥ ३९ ॥</p>
+                    <p>तुलसीदास सदा हरि चेरा।</p><p class="mb-4">कीजै नाथ हृदय मह डेरा ॥ ४० ॥</p>
+                    <p class="font-semibold my-4">॥ दोहा ॥</p>
+                    <p>पवन तनय संकट हरन, मंगल मूरति रूप।</p>
+                    <p class="mb-4">राम लखन सीता सहित, हृदय बसहु सुर भूप॥</p>
+                </article>
+            `,
+            english: `
+                <article>
+                    <p class="font-semibold mb-4">|| Doha ||</p>
+                    <p>Shri Guru Charan Saroj raj, Nij manu Mukuru sudhari</p>
+                    <p class="mb-4">Baranau Raghuvar Bimal Jasu, Jo dayaku phala chari</p>
+                    <p>Buddhi Hin Tanu Janike, Sumirau Pavana Kumar</p>
+                    <p class="mb-4">Bala buddhi Vidya dehu mohi, Harahu Kalesa Vikar</p>
+                    <p class="font-semibold my-4">|| Chaupai ||</p>
+                    <p>Jai Hanuman gyan gun sagar,</p><p class="mb-4">Jai Kapis tihun lok ujagar ॥ 1 ॥</p>
+                    <p>Ram doot atulit bal dhama,</p><p class="mb-4">Anjani putra Pavan sut nama ॥ 2 ॥</p>
+                    <p>Mahavir Vikram Bajrangi,</p><p class="mb-4">Kumati nivar sumati Ke sangi ॥ 3 ॥</p>
+                    <p>Kanchan varan viraj subesa,</p><p class="mb-4">Kanan Kundal Kunchit Kesa ॥ 4 ॥</p>
+                    <p>Hath Vajra Aur Dhuvaja Viraje,</p><p class="mb-4">Kandhe moonj janehu sajai ॥ 5 ॥</p>
+                    <p>Sankar suvan kesri Nandan,</p><p class="mb-4">Tej pratap maha jag vandan ॥ 6 ॥</p>
+                    <p>Vidyavan guni ati chatur,</p><p class="mb-4">Ram kaj karibe ko aatur ॥ 7 ॥</p>
+                    <p>Prabu charitra sunibe ko rasiya,</p><p class="mb-4">Ram Lakhan Sita man Basiya ॥ 8 ॥</p>
+                    <p>Sukshma roop dhari Siyahi dikhava,</p><p class="mb-4">Vikat roop dhari lank jarava ॥ 9 ॥</p>
+                    <p>Bhima roop dhari asur sanghare,</p><p class="mb-4">Ramachandra ke kaj sanvare ॥ 10 ॥</p>
+                    <p>Laye Sanjivan Lakhan Jiyaye,</p><p class="mb-4">Shri Raghuvir Harashi ur laye ॥ 11 ॥</p>
+                    <p>Raghupati Kinhi bahut badai,</p><p class="mb-4">Tum mam priye Bharat-hi-sam bhai ॥ 12 ॥</p>
+                    <p>Sahas badan tumharo yash gave,</p><p class="mb-4">Asa kahi Shripati kanth lagave ॥ 13 ॥</p>
+                    <p>Sankadik Brahmadi Muneesa,</p><p class="mb-4">Narad Sarad sahit Aheesa ॥ 14 ॥</p>
+                    <p>Yam Kuber Digpal Jahan te,</p><p class="mb-4">Kavi kovid kahi sake kahan te ॥ 15 ॥</p>
+                    <p>Tum upkar Sugreevahin keenha,</p><p class="mb-4">Ram milaye rajpad deenha ॥ 16 ॥</p>
+                    <p>Tumharo mantra Vibheeshan mana,</p><p class="mb-4">Lankeshwar Bhaye Sub jag jana ॥ 17 ॥</p>
+                    <p>Yug sahasra jojan par Bhanu,</p><p class="mb-4">Leelyo tahi madhur phal janu ॥ 18 ॥</p>
+                    <p>Prabhu mudrika meli mukh mahee,</p><p class="mb-4">Jaladhi langhi gaye achraj nahee ॥ 19 ॥</p>
+                    <p>Durgaam kaj jagat ke jete,</p><p class="mb-4">Sugam anugraha tumhre tete ॥ 20 ॥</p>
+                    <p>Ram dware tum rakhvare,</p><p class="mb-4">Hoat na agya binu paisare ॥ 21 ॥</p>
+                    <p>Sub sukh lahai tumhari sarna,</p><p class="mb-4">Tum rakshak kahu ko dar na ॥ 22 ॥</p>
+                    <p>Aapan tej samharo aapai,</p><p class="mb-4">Teenhon lok hank te kanpai ॥ 23 ॥</p>
+                    <p>Bhoot pishach Nikat nahin aavai,</p><p class="mb-4">Mahavir jab naam sunavai ॥ 24 ॥</p>
+                    <p>Nase rog harai sab peera,</p><p class="mb-4">Japat nirantar Hanumant beera ॥ 25 ॥</p>
+                    <p>Sankat se Hanuman chhudavai,</p><p class="mb-4">Man Karam Vachan dyan jo lavai ॥ 26 ॥</p>
+                    <p>Sab par Ram tapasvee raja,</p><p class="mb-4">Tin ke kaj sakal Tum saja ॥ 27 ॥</p>
+                    <p>Aur manorath jo koi lavai,</p><p class="mb-4">Soi amit jeevan phal pavai ॥ 28 ॥</p>
+                    <p>Charon Jug partap tumhara,</p><p class="mb-4">Hai persidh jagat ujiyara ॥ 29 ॥</p>
+                    <p>Sadhu Sant ke tum Rakhware,</p><p class="mb-4">Asur nikandan Ram dulare ॥ 30 ॥</p>
+                    <p>Ashta sidhi nav nidhi ke data,</p><p class="mb-4">As var deen Janki mata ॥ 31 ॥</p>
+                    <p>Ram rasayan tumhare pasa,</p><p class="mb-4">Sada raho Raghupati ke dasa ॥ 32 ॥</p>
+                    <p>Tumhare bhajan Ram ko pavai,</p><p class="mb-4">Janam janam ke dukh bisravai ॥ 33 ॥</p>
+                    <p>Antkaal Raghuvar pur jayee,</p><p class="mb-4">Jahan janam Hari Bhakt Kahayee ॥ 34 ॥</p>
+                    <p>Aur Devta Chit na dharehi,</p><p class="mb-4">Hanumanth se hi sarve sukh karehi ॥ 35 ॥</p>
+                    <p>Sankat kate mite sab peera,</p><p class="mb-4">Jo sumirai Hanumat Balbeera ॥ 36 ॥</p>
+                    <p>Jai Jai Jai Hanuman Gosain,</p><p class="mb-4">Kripa Karahu Gurudev ki nayin ॥ 37 ॥</p>
+                    <p>Jo shat bar path kare koi,</p><p class="mb-4">Chhutahi bandi maha sukh hoi ॥ 38 ॥</p>
+                    <p>Jo yeh padhe Hanuman Chalisa,</p><p class="mb-4">Hoye siddhi sakhi Gaureesa ॥ 39 ॥</p>
+                    <p>Tulsidas sada hari chera,</p><p class="mb-4">Keejai Nath Hridaye mein dera ॥ 40 ॥</p>
+                    <p class="font-semibold my-4">|| Doha ||</p>
+                    <p>Pavan Tanay Sankat Haran, Mangal Murati Roop</p>
+                    <p class="mb-4">Ram Lakhan Sita sahit, Hriday Basahu Soor Bhoop</p>
+                </article>
+            `
+        };
 
-  <!-- Contact Section -->
-  <section id="contact">
-    <div class="contact container">
-      <div>
-        <h1 class="section-title">Contact <span>info</span></h1><br/> <br/>
-      </div>
-      <div class="contact-items">
-        <div class="contact-item">
-          <div class="icon"><img src="https://img.icons8.com/bubbles/100/000000/phone.png" /></div>
-          <div class="contact-info">
-            <h1>Phone</h1>
-            <h2>+91 98245 94156</h2>
-          </div>
-        </div>
-        <div class="contact-item">
-          <div class="icon"><img src="https://img.icons8.com/bubbles/100/000000/new-post.png" /></div>
-          <div class="contact-info">
-            <h1>Email</h1>
-            <h2>hookstar1993@gmail.com</h2>
-          </div>
-        </div>
-        <div class="contact-item">
-          <div class="icon"><img src="https://img.icons8.com/bubbles/100/000000/map-marker.png" /></div>
-          <div class="contact-info">
-            <h1>Address</h1>
-            <h2>India</h2>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-  <!-- End Contact Section -->
+        // --- SCRIPT LOGIC ---
+        document.addEventListener('DOMContentLoaded', function() {
+            // Main Chalisa elements
+            const contentDiv = document.getElementById('chalisa-content');
+            const tabButtons = document.querySelectorAll('.tab-btn');
+            const themeToggle = document.getElementById('theme-toggle');
+            const sunIcon = document.getElementById('sun-icon');
+            const moonIcon = document.getElementById('moon-icon');
+            const htmlTag = document.documentElement;
+            const copyBtn = document.getElementById('copy-btn');
+            const copyMessage = document.getElementById('copy-message');
 
-  <!-- Footer -->
-  <section id="footer">
-    <div class="footer container">
-      <div class="brand">
-        <h1><span>H</span>ardeep <span>S</span>avani</h1>
-      </div>
-      <h2>Your One Stop Web & Software Solution</h2>
-      <div class="social-icon">
-        <div class="social-item">
-          <a href="https://www.facebook.com/hookstar1993"><img src="https://img.icons8.com/bubbles/100/000000/facebook-new.png" /></a>
-        </div>
-        <div class="social-item">
-          <a href="https://www.instagram.com/hookstar1993"><img src="https://img.icons8.com/bubbles/100/000000/instagram-new.png" /></a>
-        </div>
-        <div class="social-item">
-          <a href="https://www.twitter.com/hookstar1993"><img src="https://img.icons8.com/bubbles/256/twitter-circled.png" /></a>
-        </div>
-        <div class="social-item">
-          <a href="https://www.behance.net/hookstar1993"><img src="https://img.icons8.com/bubbles/100/000000/behance.png" /></a>
-        </div>
-      </div>
-      
-	  <div class="unknown">
-     <h1>Designed with <span class="doha-chopai-color-Red">❤</span> in INDIA |
-      <a href="https://hookstar1993.github.io/dailyanimation"> <span class="doha-chopai-color-Red"> HOOK STAR.</span>
-      </a></h1>
-      <p>Copyright © 2023 </p>
-    </div>
-  </section>
-  <!-- End Footer -->
-  <script src="./app.js"></script>
+            // Modal elements
+            const aboutLink = document.getElementById('about-link');
+            const contactLink = document.getElementById('contact-link');
+            const donationsLink = document.getElementById('donations-link');
+            
+            const aboutModal = document.getElementById('about-modal');
+            const contactModal = document.getElementById('contact-modal');
+            const donationsModal = document.getElementById('donations-modal');
+            
+            const closeModalBtns = document.querySelectorAll('.close-modal-btn');
+
+            let currentTab = 'gujarati'; // Default to Gujarati
+
+            // Function to set the active tab
+            function setActiveTab(tabName) {
+                currentTab = tabName;
+                contentDiv.innerHTML = chalisaData[tabName];
+                
+                contentDiv.classList.remove('devanagari', 'gujarati');
+                if (tabName === 'hindi' || tabName === 'sanskrit') {
+                    contentDiv.classList.add('devanagari');
+                } else if (tabName === 'gujarati') {
+                    contentDiv.classList.add('gujarati');
+                }
+
+                tabButtons.forEach(button => {
+                    button.classList.toggle('theme-active-tab', button.dataset.tab === tabName);
+                    button.classList.toggle('theme-inactive-tab', button.dataset.tab !== tabName);
+                });
+            }
+
+            tabButtons.forEach(button => {
+                button.addEventListener('click', () => setActiveTab(button.dataset.tab));
+            });
+
+            // Theme toggle logic
+            function updateThemeIcons(isDarkMode) {
+                moonIcon.classList.toggle('hidden', !isDarkMode);
+                sunIcon.classList.toggle('hidden', isDarkMode);
+            }
+
+            function toggleTheme() {
+                htmlTag.classList.toggle('dark');
+                htmlTag.classList.toggle('light');
+                const isDarkMode = htmlTag.classList.contains('dark');
+                localStorage.setItem('theme', isDarkMode ? 'dark' : 'light');
+                updateThemeIcons(isDarkMode);
+            }
+            
+            themeToggle.addEventListener('click', toggleTheme);
+
+            // Copy text logic
+            copyBtn.addEventListener('click', () => {
+                const textToCopy = contentDiv.innerText;
+                navigator.clipboard.writeText(textToCopy).then(() => {
+                    copyMessage.classList.remove('opacity-0');
+                    setTimeout(() => copyMessage.classList.add('opacity-0'), 2000);
+                }).catch(err => console.error('Failed to copy text: ', err));
+            });
+
+            // Modal logic
+            const openModal = (modal) => modal.classList.remove('hidden');
+            const closeModal = (modal) => modal.classList.add('hidden');
+
+            aboutLink.addEventListener('click', (e) => { e.preventDefault(); openModal(aboutModal); });
+            contactLink.addEventListener('click', (e) => { e.preventDefault(); openModal(contactModal); });
+            donationsLink.addEventListener('click', (e) => { e.preventDefault(); openModal(donationsModal); });
+
+            closeModalBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    closeModal(aboutModal);
+                    closeModal(contactModal);
+                    closeModal(donationsModal);
+                });
+            });
+
+            // Close modal by clicking on the overlay
+            [aboutModal, contactModal, donationsModal].forEach(modal => {
+                modal.addEventListener('click', (e) => {
+                    if (e.target === modal) {
+                        closeModal(modal);
+                    }
+                });
+            });
+
+            // Initialize theme from localStorage or system preference
+            const savedTheme = localStorage.getItem('theme');
+            const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            const isDark = savedTheme === 'dark' || (!savedTheme && systemPrefersDark);
+
+            htmlTag.classList.toggle('dark', isDark);
+            htmlTag.classList.toggle('light', !isDark);
+            updateThemeIcons(isDark);
+            
+            // Initialize with the first tab
+            setActiveTab(currentTab);
+        });
+
+        // --- Donation Modal Copy Function ---
+        function copyDonationDetails(elementId, button) {
+            const textToCopy = document.getElementById(elementId).innerText;
+            navigator.clipboard.writeText(textToCopy).then(() => {
+                const originalHTML = button.innerHTML; 
+                button.disabled = true;
+                button.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 theme-text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" /></svg>`;
+                
+                setTimeout(() => {
+                    button.innerHTML = originalHTML;
+                    button.disabled = false;
+                }, 2000);
+            }).catch(err => {
+                console.error('Failed to copy: ', err);
+            });
+        }
+    </script>
 </body>
-
 </html>
