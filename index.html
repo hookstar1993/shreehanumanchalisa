@@ -203,6 +203,14 @@
             <div id="chalisa-content" class="text-center text-xl theme-text-primary pr-2">
                 <!-- Content will be dynamically inserted here -->
             </div>
+
+            <!-- Donations Call to Action -->
+            <div class="mt-8 pt-6 border-t border-white/20 dark:border-white/10 text-center">
+                <p class="theme-text-secondary mb-4">If you find this service valuable, please consider supporting its maintenance and development.</p>
+                <button id="donations-link-bottom" class="font-medium theme-text-primary theme-active-tab px-6 py-3 rounded-lg text-lg transition-transform hover:scale-105 active:scale-95">
+                    Make a Donation
+                </button>
+            </div>
             
             <!-- Copy Confirmation Message -->
             <div id="copy-message" class="fixed bottom-5 right-5 glass-card px-4 py-2 text-sm transition-opacity duration-300 opacity-0 theme-text-primary">
@@ -456,7 +464,7 @@
                     <p>साधु-सन्त के तुम रखवारे।</p><p class="mb-4">असुर निकन्दन राम दुलारे ॥ ३० ॥</p>
                     <p>अष्ट सिद्घि नौ निधि के दाता।</p><p class="mb-4">अस बर दीन जानकी माता ॥ ३१ ॥</p>
                     <p>राम रसायन तुम्हरे पासा।</p><p class="mb-4">सदा रहो रघुपति के दासा ॥ ३२ ॥</p>
-                    <p>तुम्हरे भजन राम को पावै।</p><p class="mb-4">जनम-जनમ કે દુખ બિસરાવૈ ॥ ૩૩ ॥</p>
+                    <p>तुम्हरे भजन राम को पावै।</p><p class="mb-4">जनम-जनમ કે દુખ બિસરાવૈ ॥ ३३ ॥</p>
                     <p>अन्त काल रघुबर पुर जाई।</p><p class="mb-4">जहाँ जन्म हरि-भक्त कहाई ॥ ३४ ॥</p>
                     <p>और देवता चित्त न धरई।</p><p class="mb-4">हनुमत सेइ सर्ब सुख करई ॥ ३५ ॥</p>
                     <p>सङ्कट कटै मिटै सब पीरा।</p><p class="mb-4">जो सुमिरै हनुमत बलबीरा ॥ ३६ ॥</p>
@@ -596,6 +604,7 @@
             const aboutLinkMobile = document.getElementById('about-link-mobile');
             const contactLinkMobile = document.getElementById('contact-link-mobile');
             const donationsLinkMobile = document.getElementById('donations-link-mobile');
+            const donationsLinkBottom = document.getElementById('donations-link-bottom');
             
             const aboutModal = document.getElementById('about-modal');
             const contactModal = document.getElementById('contact-modal');
@@ -681,6 +690,7 @@
             aboutLinkMobile.addEventListener('click', (e) => { e.preventDefault(); openModal(aboutModal); });
             contactLinkMobile.addEventListener('click', (e) => { e.preventDefault(); openModal(contactModal); });
             donationsLinkMobile.addEventListener('click', (e) => { e.preventDefault(); openModal(donationsModal); });
+            donationsLinkBottom.addEventListener('click', (e) => { e.preventDefault(); openModal(donationsModal); });
 
             closeModalBtns.forEach(btn => {
                 btn.addEventListener('click', () => {
